@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Cell - SRCC</title>
+    
+    <!-- Tailwind CSS for styling the prototype -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins & Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Mimicking the SRCC heading style */
+        .page-title {
+            font-family: 'Lora', serif;
+            color: #003366;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+        }
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            .main-layout {
+                flex-direction: row;
+            }
+        }
+        .sidebar {
+            background-color: #eaf3ff;
+            padding: 20px;
+            border-right: 1px solid #d1d5db;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #0056b3;
+            color: white;
+        }
+        .content-section {
+            padding: 24px 32px;
+            flex-grow: 1;
+        }
+        .team-table {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .team-table .row { display: flex; border-bottom: 1px solid #e5e7eb; }
+        .team-table .row:last-child { border-bottom: none; }
+        .team-table .cell { padding: 12px 16px; }
+        .team-table .role { font-weight: 600; color: #1f2937; width: 35%; }
+        .team-table .name { color: #4b5563; width: 65%; }
+        
+        .document-button {
+            background-color: #003366;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .document-button:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+        
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 16px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            list-style: none;
+            position: relative;
+            padding-right: 40px;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+        }
+        .faq-item[open] summary { background-color: #e5e7eb; }
+        .faq-item[open] summary::after { transform: translateY(-50%) rotate(180deg); }
+        .faq-item .faq-content {
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .past-brochure-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #003366;
+        }
+        .past-brochure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .past-brochure-card i {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .past-brochure-card p {
+            font-weight: 600;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #1b3055 0%, #2c4a73 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .stats-box h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .stats-box p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .contact-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .contact-card h4 {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .contact-card p {
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header section using Google Drive image -->
+    <header>
+        <img src="https://drive.google.com/uc?export=view&id=16kEOWr6nwUXQb5SVaWR3oQn9lzbAGGQo" alt="SRCC Website Header" class="w-full">
+    </header>
+
+    <div class="container mx-auto main-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-1/4 lg:w-1/5 sidebar">
+            <nav>
+                <a href="#">About Us</a>
+                <a href="#">IQAC</a>
+                <a href="#">Academics</a>
+                <a href="#">Departments & Faculty</a>
+                <a href="#" class="active">Placement</a>
+                <a href="#">Conferences</a>
+                <a href="#">Alumni Relations at SRCC</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="w-full md:w-3/4 lg:w-4/5 content-section">
+            <h1 class="text-4xl font-bold page-title">PLACEMENT</h1>
+
+            <!-- Description Section -->
+            <section class="mb-10">
+                <p class="text-gray-700 leading-relaxed">
+                    Shri Ram College of Commerce continues to achieve remarkable milestones, with the Recruitment Season 2024-25 boasting <strong class="font-bold text-blue-800">520+ offers</strong> and attracting <strong class="font-bold text-blue-800">135+ recruiters</strong> from diverse sectors. This year, placements at Shri Ram College of Commerce have set unprecedented records, facilitated by The Placement Cell. The Cell has seamlessly coordinated recruitment drives of top-tier recruiters across a wide array of domains, including consulting, finance, FMCG, tax and advisory, actuaries and insurance, startups, e-commerce, and more. These efforts have paved the way for a multitude of opportunities for students, encompassing placements, internships, and articleships.
+                </p>
+            </section>
+
+            <!-- Team 2025-26 Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Team 2025-26</h2>
+                <div class="team-table">
+                    <div class="row bg-gray-50"><div class="cell role">Convener</div><div class="cell name">Dr. Amanpreet Kaur</div></div>
+                    <div class="row"><div class="cell role">Chief Secretary</div><div class="cell name">Ashwath V K</div></div>
+                    <div class="row bg-gray-50"><div class="cell role">Secretary General</div><div class="cell name">Saksham Didwania</div></div>
+                    <div class="row"><div class="cell role">Secretary</div><div class="cell name">Sanaya Irani</div></div>
+                    <div class="row bg-gray-50"><div class="cell role">Secretary</div><div class="cell name">Vedank Khaitan</div></div>
+                </div>
+            </section>
+            
+            <!-- Our Initiatives Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Initiatives</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Driven by an unwavering commitment to ensure the overall welfare of the batch, The Placement Cell has undertaken numerous initiatives. These include but are not limited to CV Vetting, conducting numerous training sessions covering a broad spectrum of topics, and compiling comprehensive training resources such as Casebooks. Additionally, the Cell has launched PwD Recruitment initiatives and various social impact programs to ensure inclusive growth and development.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                        <i class="fas fa-file-alt text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-semibold text-gray-800 mb-2">CV Vetting</h3>
+                        <p class="text-sm text-gray-600">Professional resume review and optimization services</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                        <i class="fas fa-chalkboard-teacher text-green-600 text-2xl mb-3"></i>
+                        <h3 class="font-semibold text-gray-800 mb-2">Training Sessions</h3>
+                        <p class="text-sm text-gray-600">Comprehensive skill development programs</p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500">
+                        <i class="fas fa-book text-purple-600 text-2xl mb-3"></i>
+                        <h3 class="font-semibold text-gray-800 mb-2">Casebooks</h3>
+                        <p class="text-sm text-gray-600">Curated learning resources and case studies</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recruitment Season 2024-25 Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Recruitment Season 2024-25</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="stats-box">
+                        <h3>520+</h3>
+                        <p>Total Offers</p>
+                    </div>
+                    <div class="stats-box">
+                        <h3>135+</h3>
+                        <p>Recruiters</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recruitment Documents Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Recruitment Documents</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="#" class="document-button">
+                        <i class="fas fa-file-pdf"></i>
+                        Recruitment Brochure 2025-26
+                    </a>
+                    <a href="#" class="document-button">
+                        <i class="fas fa-chart-bar"></i>
+                        Corporate Engagement Report 2024-25
+                    </a>
+                </div>
+            </section>
+
+            <!-- Contact for More Details Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact for More Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="contact-card">
+                        <h4>Shouraya Aggarwal</h4>
+                        <p><i class="fas fa-phone mr-2"></i>+91 6239 448 010</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Sjonum Walia</h4>
+                        <p><i class="fas fa-phone mr-2"></i>+91 70873 71515</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Tanvi Bansal</h4>
+                        <p><i class="fas fa-phone mr-2"></i>+91 88824 99332</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg mt-6 text-center">
+                    <h3 class="font-semibold text-gray-800 mb-3">Email</h3>
+                    <p class="text-gray-700"><i class="fas fa-envelope mr-2"></i>placementcell@srcc.du.ac.in</p>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <details class="faq-item">
+                        <summary>Does SRCC offer PwD Recruitment?</summary>
+                        <div class="faq-content">
+                            <p>Yes, SRCC is committed to inclusive recruitment practices. The Placement Cell has launched special PwD (Persons with Disabilities) recruitment initiatives to ensure equal opportunities for all students. We work closely with recruiters to facilitate accessible recruitment processes and provide necessary support to PwD candidates.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What are the available modes of Recruitment?</summary>
+                        <div class="faq-content">
+                            <p>The Placement Cell, SRCC offers both offline as well as online/virtual recruitment modes, as per circumstances. We provide flexible solutions to accommodate recruiter preferences and ensure seamless recruitment processes regardless of the chosen mode.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What facilities are provided during the recruitment process?</summary>
+                        <div class="faq-content">
+                            <p>SRCC provides comprehensive facilities including well-equipped auditoriums for presentations, computer labs for online assessments, interview rooms, high-speed internet connectivity, audio-visual equipment, and dedicated support staff. We also offer accommodation assistance for outstation recruiters and ensure all logistical requirements are met efficiently.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Who do we reach out to?</summary>
+                        <div class="faq-content">
+                            <p>For any queries or recruitment-related assistance, please contact our team at placementcell@srcc.du.ac.in or reach out to our student coordinators: Shouraya Aggarwal (+91 6239 448 010), Sjonum Walia (+91 70873 71515), or Tanvi Bansal (+91 88824 99332). Our team is available to provide comprehensive support throughout the recruitment process.</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Past Recruitment Brochures Section -->
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Past Recruitment Brochures</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2023-24</p>
+                    </a>
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2022-23</p>
+                    </a>
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2021-22</p>
+                    </a>
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2020-21</p>
+                    </a>
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2019-20</p>
+                    </a>
+                    <a href="#" class="past-brochure-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Recruitment Brochure 2018-19</p>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
